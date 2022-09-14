@@ -33,9 +33,6 @@
             app:layout_constraintTop_toTopOf="@+id/iv_icon"
             tools:text="item" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </com.google.android.material.card.MaterialCardView>

@@ -3,6 +3,9 @@
     <color name="dark_200">#373E45</color>
     <color name="dark_500">#2C3138</color>
     <color name="dark_700">#24292f</color>
+    <color name="blue_200">#596DDC</color>
+    <color name="blue_500">#3F51B5</color>
+    <color name="blue_700">#2D3E98</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
