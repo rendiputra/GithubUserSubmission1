@@ -33,46 +33,18 @@
 
         <TextView
             android:id="@+id/tv_item_name"
-            style="?attr/textAppearanceSubtitle1"
+            style="?attr/textAppearanceHeadline6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_toEndOf="@id/iv_avatar"
-            android:textSize="16sp"
             android:textStyle="bold"
+            android:layout_marginTop="16dp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/iv_avatar"
             card_view:layout_constraintTop_toTopOf="@+id/iv_avatar"
             tools:text="@string/heroes_name" />
 
-        <TextView
-            android:id="@+id/tv_item_company"
-            style="?attr/textAppearanceSubtitle2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            card_view:layout_constraintEnd_toEndOf="@+id/tv_item_name"
-            card_view:layout_constraintStart_toStartOf="@+id/tv_item_name"
-            card_view:layout_constraintTop_toBottomOf="@+id/tv_item_name"
-            card_view:layout_constraintVertical_bias="0.0"
-            tools:text="@string/description" />
-
-        <TextView
-            android:id="@+id/tv_item_location"
-            style="?attr/textAppearanceBody2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="5"
-            card_view:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
-            card_view:layout_constraintEnd_toEndOf="@+id/tv_item_name"
-            card_view:layout_constraintStart_toStartOf="@+id/tv_item_name"
-            card_view:layout_constraintTop_toBottomOf="@+id/tv_item_company"
-            card_view:layout_constraintVertical_bias="0.0"
-            tools:text="@string/location_user" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
