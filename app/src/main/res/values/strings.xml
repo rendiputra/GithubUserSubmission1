@@ -9,6 +9,7 @@
     <string name="label_location">Location\t\t\t:</string>
     <string name="format_followers">%s Followers</string>
     <string name="format_following">%s Following</string>
+    <string name="search">Search</string>
 
     <string-array name="username">
         <item>JakeWharton</item>

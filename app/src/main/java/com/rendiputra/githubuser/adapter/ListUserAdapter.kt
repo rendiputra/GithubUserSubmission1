@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.rendiputra.githubuser.databinding.ItemRowHeroBinding
+import com.rendiputra.githubuser.databinding.ItemRowUserBinding
 import com.rendiputra.githubuser.domain.User
 
 class ListUserAdapter() : ListAdapter<User, ListUserAdapter.ListViewHolder>(DiffCallback)  {
@@ -27,7 +27,7 @@ class ListUserAdapter() : ListAdapter<User, ListUserAdapter.ListViewHolder>(Diff
         this.onItemClickCallback = onItemClickCallback
     }
 
-    inner class ListViewHolder(private val binding: ItemRowHeroBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ListViewHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
             binding.tvItemName.text = user.login
             Glide.with(binding.ivAvatar)
@@ -37,7 +37,7 @@ class ListUserAdapter() : ListAdapter<User, ListUserAdapter.ListViewHolder>(Diff
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val binding = ItemRowHeroBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemRowUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding)
     }
 
