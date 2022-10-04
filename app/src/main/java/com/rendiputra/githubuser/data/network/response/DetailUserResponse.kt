@@ -1,6 +1,7 @@
 package com.rendiputra.githubuser.data.network.response
 
 import com.google.gson.annotations.SerializedName
+import com.rendiputra.githubuser.domain.DetailUser
 
 data class DetailUserResponse(
 
@@ -37,3 +38,18 @@ data class DetailUserResponse(
 	@field:SerializedName("url")
 	val url: String? = null
 )
+
+fun DetailUserResponse.asDomain(): DetailUser =
+	DetailUser(
+		followers = followers ?: 0,
+		avatarUrl = avatarUrl ?: "",
+		followingUrl = followingUrl ?: "",
+		following = following ?: 0,
+		name = name ?: "",
+		company = company ?: "",
+		location = location ?: "",
+		publicRepos = publicRepos ?: 0,
+		login = login ?: "",
+		followersUrl = followersUrl ?: "",
+		url = url ?: ""
+	)

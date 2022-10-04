@@ -23,4 +23,18 @@ interface GithubApiService {
         @Query("q") q: String,
         @Header("Authorization") authorization: String
     ) : SearchUserResponse
+
+    @GET("users/{username}/followers")
+    suspend fun getFollowerUser(
+        @Path("username") username: String,
+        @Header("Authorization") authorization: String
+    ) : List<UserResponse>
+
+    @GET("users/{username}/following")
+    suspend fun getFollowingUser(
+        @Path("username") username: String,
+        @Header("Authorization") authorization: String
+    ) : List<UserResponse>
+
+
 }

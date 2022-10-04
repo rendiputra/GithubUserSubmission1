@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.rendiputra.githubuser.databinding.ItemRowUserBinding
 import com.rendiputra.githubuser.domain.User
 
-class ListUserAdapter() : ListAdapter<User, ListUserAdapter.ListViewHolder>(DiffCallback)  {
+class ListUserAdapter : ListAdapter<User, ListUserAdapter.ListViewHolder>(DiffCallback) {
 
     private companion object DiffCallback : DiffUtil.ItemCallback<User>() {
         override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
@@ -21,18 +21,22 @@ class ListUserAdapter() : ListAdapter<User, ListUserAdapter.ListViewHolder>(Diff
         }
     }
 
-    private lateinit var onItemClickCallback: OnItemClickCallback
+    private var onItemClickCallback: OnItemClickCallback? = null
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    inner class ListViewHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ListViewHolder(private val binding: ItemRowUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
             binding.tvItemName.text = user.login
             Glide.with(binding.ivAvatar)
                 .load(user.avatarUrl)
                 .into(binding.ivAvatar)
+            itemView.setOnClickListener {
+                onItemClickCallback?.onItemClicked(user)
+            }
         }
     }
 

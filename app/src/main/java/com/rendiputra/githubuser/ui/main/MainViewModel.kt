@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rendiputra.githubuser.data.GithubRepository
 import com.rendiputra.githubuser.data.Response
-import com.rendiputra.githubuser.data.network.response.UserResponse
 import com.rendiputra.githubuser.domain.User
 import kotlinx.coroutines.launch
 

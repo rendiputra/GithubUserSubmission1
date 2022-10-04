@@ -3,27 +3,31 @@ package com.rendiputra.githubuser.ui.main
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
+import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.rendiputra.githubuser.DetailActivity
 import com.rendiputra.githubuser.R
 import com.rendiputra.githubuser.adapter.ListUserAdapter
 import com.rendiputra.githubuser.data.Response
+import com.rendiputra.githubuser.databinding.ActivityMainBinding
 import com.rendiputra.githubuser.di.DI
 import com.rendiputra.githubuser.domain.User
 import com.rendiputra.githubuser.ui.ViewModelFactory
+import com.rendiputra.githubuser.ui.detail.DetailActivity
+import com.rendiputra.githubuser.ui.search.SearchActivity
 
-class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback {
-    private lateinit var rvUsers: RecyclerView
+class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
+    Toolbar.OnMenuItemClickListener {
+    private lateinit var binding: ActivityMainBinding
 
-    private lateinit var listUserAdapter : ListUserAdapter
+    private lateinit var listUserAdapter: ListUserAdapter
 
-    private val mainViewModel : MainViewModel by viewModels {
+    private val mainViewModel: MainViewModel by viewModels {
         ViewModelFactory(DI.provideRepository())
     }
 
@@ -31,24 +35,24 @@ class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback {
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        rvUsers = findViewById(R.id.rv_heroes)
-        rvUsers.setHasFixedSize(true)
-
+        setupToolbar()
         showRecyclerList()
 
-        mainViewModel.getListUser("token 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")
+        mainViewModel.getListUser("token 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")
         mainViewModel.listuser.observe(this) { response ->
             when (response) {
                 is Response.Loading -> {
-                    Log.d("TAG", "onCreate: loading")
+                    binding.lottieLoading.visibility = View.VISIBLE
                 }
                 is Response.Success -> {
+                    binding.lottieLoading.visibility = View.GONE
                     listUserAdapter.submitList(response.data)
                 }
                 is Response.Error -> {
-                    Log.d("TAG", "onCreate: error = ${response.error.message}")
+                    binding.lottieLoading.visibility = View.GONE
                 }
             }
         }
@@ -56,12 +60,12 @@ class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback {
 
     private fun showRecyclerList() {
         if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            rvUsers.layoutManager = GridLayoutManager(this, 2)
+            binding.rvUsers.layoutManager = GridLayoutManager(this, 2)
         } else {
-            rvUsers.layoutManager = LinearLayoutManager(this)
+            binding.rvUsers.layoutManager = LinearLayoutManager(this)
         }
         listUserAdapter = ListUserAdapter()
-        rvUsers.adapter = listUserAdapter
+        binding.rvUsers.adapter = listUserAdapter
 
         listUserAdapter.setOnItemClickCallback(this)
     }
@@ -69,8 +73,28 @@ class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback {
 
     override fun onItemClicked(data: User) {
         val intent = Intent(this, DetailActivity::class.java)
-//        intent.putExtra("extra_user", data)
+        intent.putExtra("extra_user", data)
         startActivity(intent)
+    }
+
+    private fun setupToolbar() {
+        binding.toolbar.apply {
+            setOnMenuItemClickListener(this@MainActivity)
+            setNavigationOnClickListener {
+                onBackPressed()
+            }
+        }
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.action_search -> {
+                val intent = Intent(this, SearchActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> false
+        }
     }
 
 }
