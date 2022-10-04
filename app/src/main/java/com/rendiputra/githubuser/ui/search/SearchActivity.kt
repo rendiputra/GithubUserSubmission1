@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.rendiputra.githubuser.BuildConfig
 import com.rendiputra.githubuser.R
 import com.rendiputra.githubuser.adapter.ListUserAdapter
 import com.rendiputra.githubuser.data.Response
@@ -72,7 +73,7 @@ class SearchActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener,
     private fun searchUser() {
         val query = binding.tieSearch.text.toString().trim()
         if (query.isNotBlank()) {
-            searchViewModel.searchUser("token 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", query)
+            searchViewModel.searchUser("token ${BuildConfig.API_KEY}", query)
         } else {
             binding.tieSearch.error = "This field is not be empty"
         }
@@ -80,7 +81,7 @@ class SearchActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener,
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when (item?.itemId) {
-            R.id.action_search ->{
+            R.id.action_search -> {
                 searchUser()
                 true
             }

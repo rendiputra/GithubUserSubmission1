@@ -5,11 +5,11 @@ import com.rendiputra.githubuser.data.network.service.GithubApiConfig
 import com.rendiputra.githubuser.data.network.service.GithubApiService
 
 object DI {
-    fun provideRepository() : GithubRepository {
+    fun provideRepository(): GithubRepository {
         return GithubRepository(provideGithubApiService())
     }
 
-    private fun provideGithubApiService() : GithubApiService {
+    private fun provideGithubApiService(): GithubApiService {
         return GithubApiConfig.service
     }
 }

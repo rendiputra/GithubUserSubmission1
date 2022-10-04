@@ -10,31 +10,31 @@ import retrofit2.http.Query
 
 interface GithubApiService {
     @GET("users")
-    suspend fun getListUsers(@Header("Authorization") token : String) : List<UserResponse>
+    suspend fun getListUsers(@Header("Authorization") token: String): List<UserResponse>
 
     @GET("users/{username}")
     suspend fun getDetailUser(
         @Path("username") username: String,
         @Header("Authorization") authorization: String
-    ) : DetailUserResponse
+    ): DetailUserResponse
 
     @GET("search/users")
     suspend fun searchUser(
         @Query("q") q: String,
         @Header("Authorization") authorization: String
-    ) : SearchUserResponse
+    ): SearchUserResponse
 
     @GET("users/{username}/followers")
     suspend fun getFollowerUser(
         @Path("username") username: String,
         @Header("Authorization") authorization: String
-    ) : List<UserResponse>
+    ): List<UserResponse>
 
     @GET("users/{username}/following")
     suspend fun getFollowingUser(
         @Path("username") username: String,
         @Header("Authorization") authorization: String
-    ) : List<UserResponse>
+    ): List<UserResponse>
 
 
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.rendiputra.githubuser.BuildConfig
 import com.rendiputra.githubuser.adapter.ListUserAdapter
 import com.rendiputra.githubuser.data.Response
 import com.rendiputra.githubuser.databinding.FragmentFollowBinding
@@ -45,9 +46,9 @@ class FollowFragment : Fragment() {
         listUserAdapter = ListUserAdapter()
 
         if (position == 0) {
-            followViewModel.getFollowerUser(username, "token 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")
+            followViewModel.getFollowerUser(username, "token ${BuildConfig.API_KEY}")
         } else {
-            followViewModel.getFollowingUser(username, "token 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")
+            followViewModel.getFollowingUser(username, "token ${BuildConfig.API_KEY}")
         }
 
         setupRecyclerView()
@@ -72,7 +73,6 @@ class FollowFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-
         binding.rvFollow.adapter = listUserAdapter
     }
 

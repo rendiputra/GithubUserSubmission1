@@ -7,6 +7,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+import com.rendiputra.githubuser.BuildConfig
 import com.rendiputra.githubuser.R
 import com.rendiputra.githubuser.adapter.ListDetailAdapter
 import com.rendiputra.githubuser.data.DetailItem
@@ -54,7 +55,7 @@ class DetailActivity : AppCompatActivity() {
             tab.text = getString(TAB_TITLES[position])
         }.attach()
 
-        detailViewModel.getDetailUser(user.login, "token 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")
+        detailViewModel.getDetailUser(user.login, "token ${BuildConfig.API_KEY}")
 
         setupToolbar()
         observeDetailUser()
@@ -85,10 +86,25 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setupItemDetailRecyclerView(detailUser: DetailUser) {
         val listItems = arrayListOf<DetailItem>()
-        listItems.add(DetailItem(R.drawable.ic_baseline_people_24, getString(R.string.format_followers, detailUser.followers)))
-        listItems.add(DetailItem(R.drawable.ic_baseline_following_24, getString(R.string.format_following, detailUser.following)))
+        listItems.add(
+            DetailItem(
+                R.drawable.ic_baseline_people_24,
+                getString(R.string.format_followers, detailUser.followers)
+            )
+        )
+        listItems.add(
+            DetailItem(
+                R.drawable.ic_baseline_following_24,
+                getString(R.string.format_following, detailUser.following)
+            )
+        )
         listItems.add(DetailItem(R.drawable.ic_baseline_company_24, detailUser.company))
-        listItems.add(DetailItem(R.drawable.ic_baseline_book_24, getString(R.string.format_repository, detailUser.publicRepos)))
+        listItems.add(
+            DetailItem(
+                R.drawable.ic_baseline_book_24,
+                getString(R.string.format_repository, detailUser.publicRepos)
+            )
+        )
         listItems.add(DetailItem(R.drawable.ic_baseline_location_on_24, detailUser.location))
 
         listDetailAdapter = ListDetailAdapter(listItems)

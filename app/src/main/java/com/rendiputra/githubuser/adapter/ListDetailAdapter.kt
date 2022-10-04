@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rendiputra.githubuser.R
 import com.rendiputra.githubuser.data.DetailItem
 
-class ListDetailAdapter(private val listDetailItem: ArrayList<DetailItem>) : RecyclerView.Adapter<ListDetailAdapter.ListViewHolder>()  {
+class ListDetailAdapter(private val listDetailItem: ArrayList<DetailItem>) :
+    RecyclerView.Adapter<ListDetailAdapter.ListViewHolder>() {
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var ivIcon: ImageView = itemView.findViewById(R.id.iv_icon)
@@ -17,7 +18,8 @@ class ListDetailAdapter(private val listDetailItem: ArrayList<DetailItem>) : Rec
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_row_detail, parent, false)
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_row_detail, parent, false)
         return ListViewHolder(view)
     }
 

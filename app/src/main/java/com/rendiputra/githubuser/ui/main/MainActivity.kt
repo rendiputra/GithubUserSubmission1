@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rendiputra.githubuser.BuildConfig
 import com.rendiputra.githubuser.R
 import com.rendiputra.githubuser.adapter.ListUserAdapter
 import com.rendiputra.githubuser.data.Response
@@ -40,22 +41,9 @@ class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
 
         setupToolbar()
         showRecyclerList()
+        observeListUser()
 
-        mainViewModel.getListUser("token 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")
-        mainViewModel.listuser.observe(this) { response ->
-            when (response) {
-                is Response.Loading -> {
-                    binding.lottieLoading.visibility = View.VISIBLE
-                }
-                is Response.Success -> {
-                    binding.lottieLoading.visibility = View.GONE
-                    listUserAdapter.submitList(response.data)
-                }
-                is Response.Error -> {
-                    binding.lottieLoading.visibility = View.GONE
-                }
-            }
-        }
+        mainViewModel.getListUser("token ${BuildConfig.API_KEY}")
     }
 
     private fun showRecyclerList() {
@@ -64,6 +52,7 @@ class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
         } else {
             binding.rvUsers.layoutManager = LinearLayoutManager(this)
         }
+
         listUserAdapter = ListUserAdapter()
         binding.rvUsers.adapter = listUserAdapter
 
@@ -94,6 +83,23 @@ class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
                 true
             }
             else -> false
+        }
+    }
+
+    private fun observeListUser() {
+        mainViewModel.listuser.observe(this) { response ->
+            when (response) {
+                is Response.Loading -> {
+                    binding.lottieLoading.visibility = View.VISIBLE
+                }
+                is Response.Success -> {
+                    binding.lottieLoading.visibility = View.GONE
+                    listUserAdapter.submitList(response.data)
+                }
+                is Response.Error -> {
+                    binding.lottieLoading.visibility = View.GONE
+                }
+            }
         }
     }
 

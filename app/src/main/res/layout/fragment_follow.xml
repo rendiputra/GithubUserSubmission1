@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        tools:listitem="@layout/item_row_user"/>
+        tools:listitem="@layout/item_row_user" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_loading"
