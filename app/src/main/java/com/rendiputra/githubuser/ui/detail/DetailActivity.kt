@@ -2,6 +2,7 @@ package com.rendiputra.githubuser.ui.detail
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +34,6 @@ class DetailActivity : AppCompatActivity() {
         private val TAB_TITLES = intArrayOf(
             R.string.follower,
             R.string.following
-
         )
     }
 
@@ -114,13 +114,29 @@ class DetailActivity : AppCompatActivity() {
     private fun observeDetailUser() {
         detailViewModel.detailUser.observe(this) { response ->
             when (response) {
-                is Response.Loading -> {}
+                is Response.Loading -> {
+                    toggleLoading(true)
+                }
                 is Response.Success -> {
+                    toggleLoading(false)
                     setupDetailView(response.data)
                     setupItemDetailRecyclerView(response.data)
                 }
-                is Response.Error -> {}
+                is Response.Error -> {
+                    toggleLoading(false)
+                }
             }
+        }
+    }
+
+    private fun toggleLoading(state: Boolean) {
+        binding.collapsingToolbarLayout.visibility = if (state) View.GONE else View.VISIBLE
+        binding.shimmerDetail.root.visibility = if (state) View.VISIBLE else View.GONE
+
+        if (state) {
+            binding.shimmerDetail.root.startShimmer()
+        } else {
+            binding.shimmerDetail.root.stopShimmer()
         }
     }
 }
