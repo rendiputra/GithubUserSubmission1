@@ -8,25 +8,30 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rendiputra.githubuser.R
 import com.rendiputra.githubuser.data.DetailItem
+import com.rendiputra.githubuser.databinding.ItemRowDetailBinding
+import com.rendiputra.githubuser.domain.User
 
 class ListDetailAdapter(private val listDetailItem: ArrayList<DetailItem>) :
     RecyclerView.Adapter<ListDetailAdapter.ListViewHolder>() {
 
-    class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var ivIcon: ImageView = itemView.findViewById(R.id.iv_icon)
-        var tvItem: TextView = itemView.findViewById(R.id.tv_item)
+    class ListViewHolder(private val binding: ItemRowDetailBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(detailItem: DetailItem) {
+            binding.apply {
+                ivIcon.setImageResource(detailItem.icon)
+                tvItem.text = detailItem.title
+            }
+
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_row_detail, parent, false)
-        return ListViewHolder(view)
+        val binding = ItemRowDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val itemDetail = listDetailItem[position]
-        holder.ivIcon.setImageResource(itemDetail.icon)
-        holder.tvItem.text = itemDetail.title
+        holder.bind(itemDetail)
     }
 
     override fun getItemCount(): Int = listDetailItem.size

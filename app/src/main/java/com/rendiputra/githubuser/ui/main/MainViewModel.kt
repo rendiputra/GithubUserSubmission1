@@ -10,13 +10,13 @@ import com.rendiputra.githubuser.domain.User
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val githubRepository: GithubRepository) : ViewModel() {
-    private val _listuser: MutableLiveData<Response<List<User>>> = MutableLiveData()
-    val listuser: LiveData<Response<List<User>>> get() = _listuser
+    private val _listUser: MutableLiveData<Response<List<User>>> = MutableLiveData()
+    val listUser: LiveData<Response<List<User>>> get() = _listUser
 
     fun getListUser(token: String) {
         viewModelScope.launch {
             githubRepository.getListUser(token).collect {
-                _listuser.postValue(it)
+                _listUser.postValue(it)
             }
         }
 

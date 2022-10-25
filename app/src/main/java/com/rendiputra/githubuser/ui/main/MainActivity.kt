@@ -20,6 +20,7 @@ import com.rendiputra.githubuser.di.DI
 import com.rendiputra.githubuser.domain.User
 import com.rendiputra.githubuser.ui.ViewModelFactory
 import com.rendiputra.githubuser.ui.detail.DetailActivity
+import com.rendiputra.githubuser.ui.favorite.FavoriteActivity
 import com.rendiputra.githubuser.ui.search.SearchActivity
 
 class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
@@ -47,10 +48,10 @@ class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
     }
 
     private fun showRecyclerList() {
-        if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            binding.rvUsers.layoutManager = GridLayoutManager(this, 2)
+        binding.rvUsers.layoutManager = if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            GridLayoutManager(this, 2)
         } else {
-            binding.rvUsers.layoutManager = LinearLayoutManager(this)
+            LinearLayoutManager(this)
         }
 
         listUserAdapter = ListUserAdapter()
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
 
     override fun onItemClicked(data: User) {
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("extra_user", data)
+        intent.putExtra(DetailActivity.EXTRA_USER, data)
         startActivity(intent)
     }
 
@@ -82,12 +83,17 @@ class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
                 startActivity(intent)
                 true
             }
+            R.id.action_favorite -> {
+                val intent = Intent(this, FavoriteActivity::class.java)
+                startActivity(intent)
+                true
+            }
             else -> false
         }
     }
 
     private fun observeListUser() {
-        mainViewModel.listuser.observe(this) { response ->
+        mainViewModel.listUser.observe(this) { response ->
             when (response) {
                 is Response.Loading -> {
                     binding.lottieLoading.visibility = View.VISIBLE

@@ -1,11 +1,13 @@
 package com.rendiputra.githubuser.ui.detail
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rendiputra.githubuser.BuildConfig
@@ -19,7 +21,7 @@ import com.rendiputra.githubuser.domain.DetailUser
 import com.rendiputra.githubuser.domain.User
 import com.rendiputra.githubuser.ui.ViewModelFactory
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private lateinit var binding: ActivityDetailBinding
 
@@ -35,10 +37,12 @@ class DetailActivity : AppCompatActivity() {
             R.string.follower,
             R.string.following
         )
+
+        const val EXTRA_USER = "extra_user"
     }
 
     private val detailViewModel: DetailViewModel by viewModels {
-        ViewModelFactory(DI.provideRepository())
+        ViewModelFactory(DI.provideRepository(), DI.provideDatabaseRepository(this))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +50,13 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        user = intent.getParcelableExtra<User>("extra_user") as User
+        user = intent.getParcelableExtra<User>(EXTRA_USER) as User
+
+        if (savedInstanceState == null) {
+            detailViewModel.getDetailUser(user.login, "token ${BuildConfig.API_KEY}")
+            detailViewModel.isFavorite(user.login)
+        }
+
         sectionsPagerAdapter = SectionsPagerAdapter(this)
         sectionsPagerAdapter.username = user.login
         binding.vpFollow.adapter = sectionsPagerAdapter
@@ -55,24 +65,18 @@ class DetailActivity : AppCompatActivity() {
             tab.text = getString(TAB_TITLES[position])
         }.attach()
 
-        detailViewModel.getDetailUser(user.login, "token ${BuildConfig.API_KEY}")
+
 
         setupToolbar()
         observeDetailUser()
+        observeIsFavoriteUser()
     }
 
     private fun setupToolbar() {
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-        }
-
-        return super.onOptionsItemSelected(item)
+        binding.toolbar.setOnMenuItemClickListener(this)
     }
 
     private fun setupDetailView(detailUser: DetailUser) {
@@ -129,6 +133,15 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun observeIsFavoriteUser() {
+        detailViewModel.isFavorite.observe(this) { isFavorite ->
+            val favoriteIcon =
+                if (isFavorite) R.drawable.ic_baseline_favorite_24 else R.drawable.ic_baseline_favorite_border_24
+            binding.toolbar.menu.getItem(0).setIcon(favoriteIcon)
+        }
+    }
+
+
     private fun toggleLoading(state: Boolean) {
         binding.collapsingToolbarLayout.visibility = if (state) View.GONE else View.VISIBLE
         binding.shimmerDetail.root.visibility = if (state) View.VISIBLE else View.GONE
@@ -137,6 +150,16 @@ class DetailActivity : AppCompatActivity() {
             binding.shimmerDetail.root.startShimmer()
         } else {
             binding.shimmerDetail.root.stopShimmer()
+        }
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.action_toggle_favorite -> {
+                detailViewModel.toggleFavoriteUser(user)
+                true
+            }
+            else -> false
         }
     }
 }
