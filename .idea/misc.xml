@@ -16,6 +16,7 @@
         <entry key="..\:/source_code/2022/android/GithubUser/app/src/main/res/layout/activity_detail.xml" value="0.22" />
         <entry key="..\:/source_code/2022/android/GithubUser/app/src/main/res/layout/activity_favorite.xml" value="0.168359375" />
         <entry key="..\:/source_code/2022/android/GithubUser/app/src/main/res/layout/activity_main.xml" value="0.168359375" />
+        <entry key="..\:/source_code/2022/android/GithubUser/app/src/main/res/layout/activity_preference.xml" value="0.168359375" />
         <entry key="..\:/source_code/2022/android/GithubUser/app/src/main/res/layout/activity_search.xml" value="0.168359375" />
         <entry key="..\:/source_code/2022/android/GithubUser/app/src/main/res/layout/fragment_follow.xml" value="0.168359375" />
         <entry key="..\:/source_code/2022/android/GithubUser/app/src/main/res/layout/item_row_detail.xml" value="0.22" />
@@ -27,6 +28,7 @@
         <entry key="..\:/source_code/2022/android/GithubUser/app/src/main/res/menu/menu_favprite.xml" value="0.167578125" />
         <entry key="..\:/source_code/2022/android/GithubUser/app/src/main/res/menu/menu_home.xml" value="0.167578125" />
         <entry key="..\:/source_code/2022/android/GithubUser/app/src/main/res/menu/menu_search.xml" value="0.168359375" />
+        <entry key="..\:/source_code/2022/android/GithubUser/app/src/main/res/xml/preferences.xml" value="0.167578125" />
       </map>
     </option>
   </component>

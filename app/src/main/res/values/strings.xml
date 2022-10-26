@@ -17,5 +17,8 @@
     <string name="settings">Settings</string>
     <string name="favorite_user">Favorite Users</string>
     <string name="toggle_favorite">toggle favorite</string>
+    <string name="key_themes">themes</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="setting">Setting</string>
 
 </resources>

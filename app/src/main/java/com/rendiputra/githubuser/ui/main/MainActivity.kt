@@ -7,8 +7,10 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rendiputra.githubuser.BuildConfig
@@ -21,6 +23,7 @@ import com.rendiputra.githubuser.domain.User
 import com.rendiputra.githubuser.ui.ViewModelFactory
 import com.rendiputra.githubuser.ui.detail.DetailActivity
 import com.rendiputra.githubuser.ui.favorite.FavoriteActivity
+import com.rendiputra.githubuser.ui.preference.PreferenceActivity
 import com.rendiputra.githubuser.ui.search.SearchActivity
 
 class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
@@ -45,14 +48,27 @@ class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
         observeListUser()
 
         mainViewModel.getListUser("token ${BuildConfig.API_KEY}")
+
+        PreferenceManager.getDefaultSharedPreferences(this).apply {
+            val themeKey = getString(R.string.key_themes)
+            val isDarkMode = getBoolean(themeKey, false)
+            val themeMode = if (isDarkMode) {
+                AppCompatDelegate.MODE_NIGHT_YES
+            } else {
+                AppCompatDelegate.MODE_NIGHT_NO
+            }
+
+            AppCompatDelegate.setDefaultNightMode(themeMode)
+        }
     }
 
     private fun showRecyclerList() {
-        binding.rvUsers.layoutManager = if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            GridLayoutManager(this, 2)
-        } else {
-            LinearLayoutManager(this)
-        }
+        binding.rvUsers.layoutManager =
+            if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                GridLayoutManager(this, 2)
+            } else {
+                LinearLayoutManager(this)
+            }
 
         listUserAdapter = ListUserAdapter()
         binding.rvUsers.adapter = listUserAdapter
@@ -85,6 +101,11 @@ class MainActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
             }
             R.id.action_favorite -> {
                 val intent = Intent(this, FavoriteActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.action_settings -> {
+                val intent = Intent(this, PreferenceActivity::class.java)
                 startActivity(intent)
                 true
             }

@@ -1,7 +1,6 @@
 package com.rendiputra.githubuser.ui.detail
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -64,8 +63,6 @@ class DetailActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         TabLayoutMediator(binding.tabLayout, binding.vpFollow) { tab, position ->
             tab.text = getString(TAB_TITLES[position])
         }.attach()
-
-
 
         setupToolbar()
         observeDetailUser()

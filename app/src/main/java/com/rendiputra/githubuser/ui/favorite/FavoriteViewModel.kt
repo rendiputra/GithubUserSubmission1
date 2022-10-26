@@ -8,10 +8,11 @@ import com.rendiputra.githubuser.data.GithubDatabaseRepository
 import com.rendiputra.githubuser.domain.User
 import kotlinx.coroutines.launch
 
-class FavoriteViewModel(private val githubDatabaseRepository: GithubDatabaseRepository): ViewModel() {
+class FavoriteViewModel(private val githubDatabaseRepository: GithubDatabaseRepository) :
+    ViewModel() {
 
     private val _listFavoriteUsers: MutableLiveData<List<User>> = MutableLiveData()
-    val listFavoriteUsers: LiveData<List<User>> get() =_listFavoriteUsers
+    val listFavoriteUsers: LiveData<List<User>> get() = _listFavoriteUsers
 
     init {
         viewModelScope.launch {

@@ -2,7 +2,6 @@ package com.rendiputra.githubuser.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.rendiputra.githubuser.data.network.response.UserResponse
 import com.rendiputra.githubuser.domain.User
 
 @Entity(tableName = "user_table")

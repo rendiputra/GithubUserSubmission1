@@ -26,6 +26,7 @@ class FollowFragment : Fragment() {
     private val followViewModel: FollowViewModel by viewModels {
         ViewModelFactory(DI.provideRepository())
     }
+
     private lateinit var username: String
     private var position = 0
     private lateinit var listUserAdapter: ListUserAdapter
