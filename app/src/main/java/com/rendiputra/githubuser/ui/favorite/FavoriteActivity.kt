@@ -10,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rendiputra.githubuser.R
 import com.rendiputra.githubuser.adapter.ListUserAdapter
 import com.rendiputra.githubuser.databinding.ActivityFavoriteBinding
 import com.rendiputra.githubuser.di.DI
 import com.rendiputra.githubuser.domain.User
 import com.rendiputra.githubuser.ui.ViewModelFactory
 import com.rendiputra.githubuser.ui.detail.DetailActivity
+import com.rendiputra.githubuser.ui.preference.PreferenceActivity
 
 class FavoriteActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallback,
     Toolbar.OnMenuItemClickListener {
@@ -69,7 +71,14 @@ class FavoriteActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallbac
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
-        return true
+        return when (item?.itemId) {
+            R.id.action_settings -> {
+                val intent = Intent(this, PreferenceActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> false
+        }
     }
 
     private fun observeListUser() {
@@ -79,7 +88,6 @@ class FavoriteActivity : AppCompatActivity(), ListUserAdapter.OnItemClickCallbac
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menu?.getItem(0)?.setIcon(R.drawable.ic_baseline_favorite_24)
         menuFavorite = menu
         return super.onCreateOptionsMenu(menu)
     }

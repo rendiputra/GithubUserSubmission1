@@ -15,14 +15,13 @@ object DI {
 
     fun provideDatabaseRepository(context: Context): GithubDatabaseRepository {
         return GithubDatabaseRepository(provideUserDao(context))
-
     }
 
     private fun provideGithubApiService(): GithubApiService {
         return GithubApiConfig.service
     }
 
-    fun provideUserDao(context: Context): UserDao {
+    private fun provideUserDao(context: Context): UserDao {
         return GithubDatabase.getInstance(context).userDao()
     }
 }
